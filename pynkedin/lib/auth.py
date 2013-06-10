@@ -16,7 +16,6 @@ class AuthSession(object):
 
   def __init__(self, client_id, client_secret, access_token):
     self.session = OAuth2Session(client_id, client_secret, access_token)
-    Company.oauth = self
 
   def get(self, **kwargs):
     pass

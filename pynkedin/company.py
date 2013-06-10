@@ -1,3 +1,5 @@
+from lib.auth import AuthService, AuthSession
+
 class Company(object):
   """
     company = Company.find(id=1)
@@ -14,6 +16,8 @@ class Company(object):
       company.name = 'My awesome company'
 
   """
+  #parser = CompanyParser
 
-  def find(self, *args):
-    pass
+  @classmethod
+  def find(cls, **kwargs):
+    print kwargs['id']
