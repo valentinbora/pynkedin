@@ -23,6 +23,21 @@ class AuthSession(object):
   def post(self, **kwargs):
     pass
 
+  def filter(self, path, **kwargs):
+    relative_path = "%s::(%s)"
+    arguments_path = ""
+
+    #TODO: refactor this
+    for arg in kwargs:
+      if arguments_path:
+        arguments_path = "%s,%s=%s" % (arguments_path, arg.replace('_', '-'), kwargs[arg])
+      else:
+        arguments_path = "%s=%s" % (arg.replace('_', '-'), kwargs[arg])
+
+    relative_path = relative_path % (path, arguments_path)
+    url = "%s%s" % (BASE_URL, relative_path)
+
+
 class AuthService(object):
   __metaclass__ = Singleton
 
