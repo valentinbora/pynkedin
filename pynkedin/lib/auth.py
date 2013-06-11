@@ -17,6 +17,8 @@ class AuthSession(object):
   def __init__(self, client_id, client_secret, access_token):
     self.session = OAuth2Session(client_id, client_secret, access_token)
 
+    self.call_url = "%s%s?oauth2_access_token=" + access_token
+
   def get(self, **kwargs):
     pass
 
@@ -35,8 +37,13 @@ class AuthSession(object):
         arguments_path = "%s=%s" % (arg.replace('_', '-'), kwargs[arg])
 
     relative_path = relative_path % (path, arguments_path)
-    url = "%s%s" % (BASE_URL, relative_path)
+    url = self.call_url % (BASE_URL, relative_path)
 
+    headers = {
+      'x-li-format': 'json'
+    }
+
+    response = self.session.get(url, headers=headers, bearer_auth=False)
 
 class AuthService(object):
   __metaclass__ = Singleton
