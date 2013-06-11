@@ -18,6 +18,10 @@ class Company(object):
   """
   #parser = CompanyParser
 
+  KEYS    = ['id', 'universal_name']
+  FILTERS = ['email_domains']
+
   @classmethod
   def find(cls, **kwargs):
-    print kwargs['id']
+    if len(kwargs) > 1:
+      AuthSession().filter(path="companies", **kwargs)
