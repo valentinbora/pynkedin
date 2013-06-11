@@ -1,5 +1,14 @@
 from lib.auth import AuthService, AuthSession
 
+KEYS    = ['id', 'universal_name']
+FILTERS = ['email_domains']
+
+FIELDS  = ['id', 'name', 'universal-name', 'email-domains', 'company-type',
+           'ticker', 'website-url', 'industries', 'status', 'logo-url',
+           'square-logo-url', 'blog-rss-url', 'twitter-id',
+           'employee-count-range', 'specialties', 'locations', 'description', 
+           'stock-exchange', 'founded-year', 'end-year', 'num-followers' ]
+
 class Company(object):
   """
     company = Company.find(id=1)
@@ -18,10 +27,7 @@ class Company(object):
   """
   #parser = CompanyParser
 
-  KEYS    = ['id', 'universal_name']
-  FILTERS = ['email_domains']
-
   @classmethod
   def find(cls, **kwargs):
     if len(kwargs) > 1:
-      AuthSession().filter(path="companies", **kwargs)
+      AuthSession().filter(path="companies", fields=FIELDS, **kwargs)

@@ -17,7 +17,7 @@ class AuthSession(object):
   def __init__(self, client_id, client_secret, access_token):
     self.session = OAuth2Session(client_id, client_secret, access_token)
 
-    self.call_url = "%s%s?oauth2_access_token=" + access_token
+    self.call_url = BASE_URL + "%s?oauth2_access_token=" + access_token
 
   def get(self, **kwargs):
     pass
@@ -25,25 +25,27 @@ class AuthSession(object):
   def post(self, **kwargs):
     pass
 
-  def filter(self, path, **kwargs):
-    relative_path = "%s::(%s)"
-    arguments_path = ""
-
+  def filter(self, path, fields=[], **kwargs):
+    relative_path = "%s::(%s):(%s)"
+    filters_path = ""
+    fields_path = ",".join(fields)
+    
     #TODO: refactor this
     for arg in kwargs:
-      if arguments_path:
-        arguments_path = "%s,%s=%s" % (arguments_path, arg.replace('_', '-'), kwargs[arg])
+      if filters_path:
+        filters_path = "%s,%s=%s" % (filters_path, arg.replace('_', '-'), kwargs[arg])
       else:
-        arguments_path = "%s=%s" % (arg.replace('_', '-'), kwargs[arg])
+        filters_path = "%s=%s" % (arg.replace('_', '-'), kwargs[arg])
 
-    relative_path = relative_path % (path, arguments_path)
-    url = self.call_url % (BASE_URL, relative_path)
+    relative_path = relative_path % (path, filters_path, fields_path)
+    url = self.call_url % relative_path
 
     headers = {
       'x-li-format': 'json'
     }
 
     response = self.session.get(url, headers=headers, bearer_auth=False)
+    print response.content
 
 class AuthService(object):
   __metaclass__ = Singleton
