@@ -25,7 +25,7 @@ class AuthSession(object):
   def post(self, **kwargs):
     pass
 
-  def filter(self, path, fields=[], **kwargs):
+  def filter(self, path, fields=[], parser=None, **kwargs):
     relative_path = "%s::(%s):(%s)"
     filters_path = ""
     fields_path = ",".join(fields)
@@ -40,12 +40,9 @@ class AuthSession(object):
     relative_path = relative_path % (path, filters_path, fields_path)
     url = self.call_url % relative_path
 
-    headers = {
-      'x-li-format': 'json'
-    }
+    response = self.session.get(url, headers={'x-li-format':'json'}, bearer_auth=False)
 
-    response = self.session.get(url, headers=headers, bearer_auth=False)
-    print response.content
+    return parser(response.content)
 
 class AuthService(object):
   __metaclass__ = Singleton
