@@ -1,5 +1,5 @@
-from lib.auth import AuthService, AuthSession
-from parsers import CompanyParser
+from auth import AuthService, AuthSession
+from parser import Parser
 
 KEYS    = ['id', 'universal_name']
 FILTERS = ['email_domains']
@@ -29,7 +29,7 @@ class Company(object):
   """
 
   fields = {}
-  parser = CompanyParser()
+  parser = Parser()
 
   def __init__(self, company_id):
     self.path = "companies/%s" % company_id

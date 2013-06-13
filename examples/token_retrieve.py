@@ -1,6 +1,6 @@
 from colorama import Fore
 
-from pynkedin.lib.auth import AuthService
+from pynkedin.auth import AuthService
 
 client_id = 'hbm5ioyd4zvu'
 client_secret = '1kDH3xYwW2D5Qwa3'

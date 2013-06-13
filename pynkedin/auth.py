@@ -5,7 +5,7 @@ import json
 
 from rauth import OAuth2Service, OAuth2Session
 
-from singleton import Singleton
+from helpers import Singleton
 
 AUTHORIZE_URL = 'https://www.linkedin.com/uas/oauth2/authorization'
 ACCESS_TOKEN = 'https://www.linkedin.com/uas/oauth2/accessToken'

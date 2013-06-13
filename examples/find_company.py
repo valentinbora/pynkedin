@@ -1,5 +1,5 @@
 from pynkedin import Company
-from pynkedin.lib.auth import AuthSession
+from pynkedin.auth import AuthSession
 
 token = 'AQXqW96j6u9T91hxk7gjTPdpZ9vpNFcAc4e-1JbZVwvA_kOuNA3CMxJAYDMxzZhj2J2zRoeo9WUoiu6cMowOvOp4JsrV_BUPALWu_Zo9g3z1nDAXbae8sQ1cMKakykjf8zKF3m7IuqdIddTMs_Ma1-BpR3Ng7LglkFZ4qn2YVducSHsc72A'
 
