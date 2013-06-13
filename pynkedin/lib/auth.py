@@ -19,25 +19,31 @@ class AuthSession(object):
 
     self.call_url = BASE_URL + "%s?oauth2_access_token=" + access_token
 
-  def get(self, **kwargs):
-    pass
+  def get(self, path, parser, fields=[], **kwargs):
+    relative_path = "%s:(%s)"
+    fields_path = ",".join(fields)
+
+    relative_path = relative_path % (path, fields_path)
+    url = self.call_url % relative_path
+
+    response = self.session.get(url, headers={'x-li-format':'json'}, bearer_auth=False)
+
+    return parser(response)
 
   def post(self, **kwargs):
     pass
 
-  def filter(self, path, fields=[], parser=None, **kwargs):
-    relative_path = "%s::(%s):(%s)"
+  def filter(self, path, parser=None, **kwargs):
+    relative_path = "%s::(%s)"
     filters_path = ""
-    fields_path = ",".join(fields)
 
-    #TODO: refactor this
     for arg in kwargs:
       if filters_path:
         filters_path = "%s,%s=%s" % (filters_path, arg.replace('_', '-'), kwargs[arg])
       else:
         filters_path = "%s=%s" % (arg.replace('_', '-'), kwargs[arg])
 
-    relative_path = relative_path % (path, filters_path, fields_path)
+    relative_path = relative_path % (path, filters_path)
     url = self.call_url % relative_path
 
     response = self.session.get(url, headers={'x-li-format':'json'}, bearer_auth=False)
