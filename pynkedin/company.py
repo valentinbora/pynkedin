@@ -37,8 +37,20 @@ class Company(object):
     self.fields['id'] = company_id
 
   def __getattr__(self, item):
+    if callable(item):
+      return item()
+
+    if hasattr(self, "_get_%s" % item):
+      return getattr(self, "_get_%s" % item)()
+
     if item not in self.fields:
       response = AuthSession().get(path=self.path, parser=self.parser, fields=[item])
       self.fields.update(response)
 
     return self.fields[item]
+
+  def _get_updates(self):
+    path = "%s/updates" % self.path
+
+    response = AuthSession().get(path=path, parser=self.parser)
+    return response
