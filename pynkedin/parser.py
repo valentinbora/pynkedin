@@ -2,21 +2,24 @@ from abc import ABCMeta, abstractmethod
 import json
 
 from exceptions import raiser, EXCEPTION_CODES
-from response_object import ResponseObject
+from helpers import ResponseObject
 
 class Parser(object):
   def __call__(self, response):
     content = json.loads(response.content)
-    status_code = content['status']
 
-    if status_code in EXCEPTION_CODES:
-      raiser(status_code)
+    if response.status_code in EXCEPTION_CODES:
+      raiser(response.status_code)
+    
+    return self.to_object(content['values'])
 
-    return self.to_object(content['values'][0])
+  def to_object(self, values):
+    response_objects = []
 
-  @abstractmethod
-  def get_object(self, content):
-    pass
+    for response in values:
+      response_objects.append(ResponseObject(response))
+    
+    if len(response_objects) == 1:
+      return response_objects[0]
 
-  def to_object(self, response):
-    return ResponseObject(response)
+    return response_objects
