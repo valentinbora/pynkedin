@@ -20,10 +20,9 @@ class AuthSession(object):
     self.call_url = BASE_URL + "%s?oauth2_access_token=" + access_token
 
   def get(self, path, parser, fields=[], **kwargs):
-    relative_path = "%s:(%s)"
     fields_path = ",".join(fields)
 
-    relative_path = relative_path % (path, fields_path)
+    relative_path = "%s:(%s)" % (path, fields_path) if fields else path
     url = self.call_url % relative_path
 
     response = self.session.get(url, headers={'x-li-format':'json'}, bearer_auth=False)
