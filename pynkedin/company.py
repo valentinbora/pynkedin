@@ -10,9 +10,10 @@ FIELDS  = ['id', 'name', 'universal-name', 'email-domains', 'company-type',
            'employee-count-range', 'specialties', 'locations', 'description',
            'stock-exchange', 'founded-year', 'end-year', 'num-followers' ]
 
+
 class Company(object):
   """
-    company = Company.find(id=1)
+    company = Company(company_id=1)
 
     Retrieve
     --------
@@ -27,13 +28,17 @@ class Company(object):
 
   """
 
-  @classmethod
-  def find(cls, **kwargs):
-    parser = CompanyParser(cls)
+  fields = {}
+  parser = CompanyParser()
 
-    if len(kwargs) > 1:
-      response_object = AuthSession().filter(path="companies", fields=FIELDS, parser=parser, **kwargs)
-      return cls(response_object)
+  def __init__(self, company_id):
+    self.path = "companies/%s" % company_id
 
-  def __init__(self, response_object):
-    response_object.set_for(self)
+    self.fields['id'] = company_id
+
+  def __getattr__(self, item):
+    if item not in self.fields:
+      response = AuthSession().get(path=self.path, parser=self.parser, fields=[item])
+      self.fields.update(response)
+
+    return self.fields[item]

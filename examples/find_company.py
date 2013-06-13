@@ -5,5 +5,5 @@ token = 'AQXqW96j6u9T91hxk7gjTPdpZ9vpNFcAc4e-1JbZVwvA_kOuNA3CMxJAYDMxzZhj2J2zRoe
 
 AuthSession(client_id='hbm5ioyd4zvu', client_secret='1kDH3xYwW2D5Qwa3', access_token=token)
 
-company = Company.find(id=7, universal_name='apple')
+company = Company(company_id=7)
 print company.industries
