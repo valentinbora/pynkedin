@@ -29,7 +29,7 @@ class AuthSession(object):
     relative_path = "%s::(%s):(%s)"
     filters_path = ""
     fields_path = ",".join(fields)
-    
+
     #TODO: refactor this
     for arg in kwargs:
       if filters_path:
