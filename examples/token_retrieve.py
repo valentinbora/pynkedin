@@ -6,10 +6,8 @@ client_id = 'hbm5ioyd4zvu'
 client_secret = '1kDH3xYwW2D5Qwa3'
 
 print Fore.YELLOW + '---- START TOKEN RETRIEVING OPERATION ----' + Fore.RESET
-#scope         = raw_input(Fore.RED + 'Define a scope: ' + Fore.RESET)
-#redirect_uri  = raw_input(Fore.RED + 'Use a redirect url: ' + Fore.RESET)
 scope = 'r_fullprofile'
-redirect_uri = 'http://linkedin.gosimplysocial.com'
+redirect_uri = 'http://localhost'
 
 
 service = AuthService(client_id, client_secret, redirect_uri)
