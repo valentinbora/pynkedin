@@ -2,8 +2,7 @@ class CompanyUpdate(dict):
 
   def __init__(self, update):
     attrs = self.parse_update(update)
-    from pprint import pprint as pp
-    pp(update)
+
     super(CompanyUpdate, self).__init__(attrs)
     self.__dict__ = self
 
@@ -39,7 +38,11 @@ class CompanyUpdate(dict):
     return timestamp
 
   def _get_comments(self, update):
-    comments = ["comment1"]
+    comments = [] 
+
+    if 'updateComments' in update:
+      comments = update['updateComments']
+
     return comments
 
   def _get_likes(self, update):
