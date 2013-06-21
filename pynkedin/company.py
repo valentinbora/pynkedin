@@ -1,6 +1,8 @@
 from auth import AuthService, AuthSession
 from parser import Parser
 
+from update import CompanyUpdate
+
 KEYS    = ['id', 'universal_name']
 FILTERS = ['email_domains']
 
@@ -9,7 +11,6 @@ FIELDS  = ['id', 'name', 'universal-name', 'email-domains', 'company-type',
            'square-logo-url', 'blog-rss-url', 'twitter-id',
            'employee-count-range', 'specialties', 'locations', 'description',
            'stock-exchange', 'founded-year', 'end-year', 'num-followers' ]
-
 
 class Company(object):
   """
@@ -51,6 +52,11 @@ class Company(object):
 
   def _get_updates(self):
     path = "%s/updates" % self.path
+    updates = []
 
     response = AuthSession().get(path=path, parser=self.parser)
-    return response
+
+    for update in response:
+      updates.append(CompanyUpdate(update))
+
+    return updates
