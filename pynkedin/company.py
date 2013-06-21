@@ -38,6 +38,7 @@ class Company(object):
     self.fields['id'] = company_id
 
   def __getattr__(self, item):
+    print item
     if callable(item):
       return item()
 
@@ -51,12 +52,19 @@ class Company(object):
     return self.fields[item]
 
   def _get_updates(self):
+    start = 0
+    count = 10
+
     path = "%s/updates" % self.path
+
     updates = []
 
-    response = AuthSession().get(path=path, parser=self.parser)
+    response = AuthSession().get(path=path, parser=self.parser, start=start, count=count)
+    while response:
+      for update in response:
+        updates.append(CompanyUpdate(update))
 
-    for update in response:
-      updates.append(CompanyUpdate(update))
+      start += count
+      response = AuthSession().get(path=path, parser=self.parser, start=start, count=count)
 
     return updates

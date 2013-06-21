@@ -17,14 +17,21 @@ class AuthSession(object):
   def __init__(self, client_id, client_secret, access_token):
     self.session = OAuth2Session(client_id, client_secret, access_token)
 
-    self.call_url = BASE_URL + "%s?oauth2_access_token=" + access_token
+    self.call_url = BASE_URL + "%soauth2_access_token=" + access_token
 
   def get(self, path, parser, fields=[], **kwargs):
-    fields_path = ",".join(fields)
+    relative_url = path
 
-    relative_path = "%s:(%s)" % (path, fields_path) if fields else path
+    if fields:
+      fields_path = ",".join(fields)
+      relative_path = "%s:(%s)?" % (path, fields_path)
+
+    if kwargs:
+      filters_path = self._build_filters_path(**kwargs)
+      relative_path = "%s?%s&" % (path, filters_path)
+
     url = self.call_url % relative_path
-
+    print url
     response = self.session.get(url, headers={'x-li-format':'json'}, bearer_auth=False)
 
     return parser(response)
@@ -34,13 +41,7 @@ class AuthSession(object):
 
   def filter(self, path, parser=None, **kwargs):
     relative_path = "%s::(%s)"
-    filters_path = ""
-
-    for arg in kwargs:
-      if filters_path:
-        filters_path = "%s,%s=%s" % (filters_path, arg.replace('_', '-'), kwargs[arg])
-      else:
-        filters_path = "%s=%s" % (arg.replace('_', '-'), kwargs[arg])
+    filters_path = self._build_filters_path(**kwargs) if kwargs else ''
 
     relative_path = relative_path % (path, filters_path)
     url = self.call_url % relative_path
@@ -48,6 +49,18 @@ class AuthSession(object):
     response = self.session.get(url, headers={'x-li-format':'json'}, bearer_auth=False)
 
     return parser(response.content)
+
+  def _build_filters_path(self, **kwargs):
+    filters_path = ""
+
+    for arg in kwargs:
+      if filters_path:
+        filters_path = "%s&%s=%s" % (filters_path, arg.replace('_', '-'), kwargs[arg])
+      else:
+        filters_path = "%s=%s" % (arg.replace('_', '-'), kwargs[arg])
+
+    return filters_path
+
 
 class AuthService(object):
   __metaclass__ = Singleton

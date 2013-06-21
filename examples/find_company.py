@@ -7,6 +7,6 @@ token = 'AQWz2WLJFZi1UGA80mreylqeH9da3kyW4r2KidA80K2q03rtqELBrWDooVNoxMShHiomdAL
 
 AuthSession(client_id='hbm5ioyd4zvu', client_secret='1kDH3xYwW2D5Qwa3', access_token=token)
 
-company = Company(company_id=2696395)
+company = Company(company_id=2418271)
 for update in company.updates:
-  print update
+  print update.likes

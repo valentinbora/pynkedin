@@ -2,7 +2,8 @@ class CompanyUpdate(dict):
 
   def __init__(self, update):
     attrs = self.parse_update(update)
-
+    from pprint import pprint as pp
+    pp(update)
     super(CompanyUpdate, self).__init__(attrs)
     self.__dict__ = self
 
@@ -18,19 +19,23 @@ class CompanyUpdate(dict):
     return attrs
 
   def _get_author(self, update):
-    author = "gigel"
+    try:
+      author = update['updateContent']['companyStatusUpdate']['share']['author']
+    except KeyError:
+      author = update['updateContent']['company']['name']
+
     return author
 
   def _get_content(self, update):
-    content = "content"
+    content = update['updateContent']['companyStatusUpdate']['share']['comment']
     return content
 
   def _get_snid(self, update):
-    snid = "snid"
+    snid = update['updateContent']['companyStatusUpdate']['share']['id']
     return snid
 
   def _get_timestamp(self, update):
-    timestamp = "123"
+    timestamp = update['timestamp']
     return timestamp
 
   def _get_comments(self, update):
@@ -38,5 +43,10 @@ class CompanyUpdate(dict):
     return comments
 
   def _get_likes(self, update):
-    likes = ["like1"]
+    likes = []
+
+    if 'numLikes' in update and update['numLikes']:
+      for like in update['likes']:
+        likes.append(like['person'])
+
     return likes

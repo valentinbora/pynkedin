@@ -10,15 +10,18 @@ class Parser(object):
 
     if response.status_code in EXCEPTION_CODES:
       raiser(response.status_code)
-    
-    return self.to_object(content['values'])
+
+    if 'values' in content:
+      return self.to_object(content['values'])
+
+    return None
 
   def to_object(self, values):
     response_objects = []
 
     for response in values:
       response_objects.append(ResponseObject(response))
-    
+
     if len(response_objects) == 1:
       return response_objects[0]
 
