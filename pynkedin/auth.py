@@ -14,8 +14,15 @@ BASE_URL = 'https://api.linkedin.com/v1/'
 class AuthSession(object):
   __metaclass__ = Singleton
 
-  def __init__(self, client_id, client_secret, access_token):
+  def __init__(self, client_id, client_secret, access_token=None):
     self.session = OAuth2Session(client_id, client_secret, access_token)
+
+    if access_token:
+      self.set_access_token(access_token)
+
+  def set_access_token(self, access_token=None):
+    if not access_token or not isinstance(access_token, str):
+      raise ValueError('')
 
     self.call_url = BASE_URL + "%soauth2_access_token=" + access_token
 
@@ -31,7 +38,7 @@ class AuthSession(object):
       relative_path = "%s?%s&" % (path, filters_path)
 
     url = self.call_url % relative_path
-    print url
+
     response = self.session.get(url, headers={'x-li-format':'json'}, bearer_auth=False)
 
     return parser(response)
