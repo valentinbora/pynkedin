@@ -32,13 +32,15 @@ class Company(object):
   fields = {}
   parser = Parser()
 
-  def __init__(self, company_id):
+  def __init__(self, company_id, cache=True):
     self.path = "companies/%s" % company_id
 
+    self.cache = cache
     self.fields['id'] = company_id
 
   def __getattr__(self, item):
-    if item in self.fields:
+    print self.fields
+    if item in self.fields and self.cache:
       return self.fields[item]
 
     if callable(item):
@@ -48,9 +50,10 @@ class Company(object):
       return getattr(self, "_get_%s" % item)()
 
     response = AuthSession().get(path=self.path, parser=self.parser, fields=[item])
-    self.fields.update(response)
+    if self.cache:
+      self.fields.update(response)
 
-    return self.fields[item]
+    return response
 
   def _get_updates(self):
     updates = CompanyUpdates(self)
@@ -70,5 +73,7 @@ class Company(object):
       kwargs['start'] += kwargs['count']
       response = AuthSession().get(path=path, parser=self.parser, **kwargs)
 
-    self.fields['updates'] = updates
+    if self.cache:
+      self.fields['updates'] = updates
+
     return updates

@@ -10,7 +10,7 @@ AuthSession(client_id='hbm5ioyd4zvu',
             access_token=token)
 
 #company = Company(company_id=2418271)
-company = Company(company_id=1703)
+company = Company(company_id=1703, cache=True)
 
 for update in company.updates:
   pp(update)
