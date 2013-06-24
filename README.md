@@ -12,6 +12,7 @@ I wanted to keep every aspect really basic and to transform the API to an ORM
 
 ### API ---> ORM
 ```python
+from pynkedin import Company
 
 #simple company retrieve by id
 company = Company(id=21476)
