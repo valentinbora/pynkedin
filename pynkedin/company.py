@@ -25,7 +25,6 @@ class Company(object):
     Create
     ------
       company.updates.add(update)
-      company.name = 'My awesome company'
 
   """
 
