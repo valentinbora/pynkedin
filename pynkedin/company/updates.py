@@ -11,7 +11,7 @@ class Manager(object):
 
     for item in self.items:
       try:
-        if all(True for key, value in criterias.iteritems() if item[key] == item[value]):
+        if all(True for key, value in criteria.iteritems() if item[key] == value):
           filtered_items.append(item)
       except KeyError:
         continue
@@ -31,4 +31,4 @@ class UpdatesManager(Manager):
 
   def ingest_updates(self, response):
     for update in response:
-      self.items.append(update)
+      self.items.append(CompanyUpdate(update))

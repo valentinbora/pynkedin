@@ -1,6 +1,6 @@
 class CompanyUpdate(dict):
 
-  def __init__(self, update, company):
+  def __init__(self, update):
     attrs = self.parse_update(update)
 
     super(CompanyUpdate, self).__init__(attrs)

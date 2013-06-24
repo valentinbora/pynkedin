@@ -12,9 +12,6 @@ AuthSession(client_id='hbm5ioyd4zvu',
 #company = Company(company_id=2418271)
 company = Company(company_id=1703, cache=True)
 
-#company.updates.all()
-#company.updates.filter(snid=213).comments.add({})
+#print company.updates.all()
+print company.updates.filter(snid='s5750272081627451398')[0].comments
 #company.updates.filter(snid=213).comments.all()
-
-for update in company.updates.all():
-  pp(update)
