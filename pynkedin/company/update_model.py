@@ -1,10 +1,12 @@
 class CompanyUpdate(dict):
 
-  def __init__(self, update):
+  def __init__(self, update, company):
     attrs = self.parse_update(update)
 
     super(CompanyUpdate, self).__init__(attrs)
     self.__dict__ = self
+
+    self.company = company
 
   def parse_update(self, update):
     attrs = {}
@@ -53,3 +55,6 @@ class CompanyUpdate(dict):
         likes.append(like['person'])
 
     return likes
+
+  def add(self, update):
+    pass
