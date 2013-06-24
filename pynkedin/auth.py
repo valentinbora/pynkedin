@@ -17,16 +17,20 @@ class AuthSession(object):
   def __init__(self, client_id, client_secret, access_token=None):
     self.session = OAuth2Session(client_id, client_secret, access_token)
 
+    self.call_url = None
     if access_token:
       self.set_access_token(access_token)
-
+    
   def set_access_token(self, access_token=None):
     if not access_token or not isinstance(access_token, str):
-      raise ValueError('')
+      raise ValueError('The access token is missing or is invalid')
 
     self.call_url = BASE_URL + "%soauth2_access_token=" + access_token
 
   def get(self, path, parser, fields=[], **kwargs):
+    if not self.call_url:
+      raise LookupError("I can't start the request if the access token is missing")
+
     relative_url = path
 
     if fields:
