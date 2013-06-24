@@ -53,7 +53,7 @@ class Company(object):
   def _get_updates(self):
     path = "%s/updates" % self.path
 
-    updates = []
+    updates = CompanyUpdates(self)
     kwargs = {
       'start': 0,
       'count': 10,
@@ -62,8 +62,7 @@ class Company(object):
 
     response = AuthSession().get(path=path, parser=self.parser, **kwargs)
     while response:
-      for update in response:
-        updates.append(CompanyUpdate(update, self))
+      updates.ingest(response)
 
       kwargs['start'] += kwargs['count']
       response = AuthSession().get(path=path, parser=self.parser, **kwargs)

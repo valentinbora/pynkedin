@@ -55,6 +55,3 @@ class CompanyUpdate(dict):
         likes.append(like['person'])
 
     return likes
-
-  def add(self, update):
-    pass
