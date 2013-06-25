@@ -1,3 +1,7 @@
+from comments_manager import CommentsManager
+
+comments = CommentsManager()
+
 class CompanyUpdate(dict):
 
   def __init__(self, update):
@@ -38,10 +42,12 @@ class CompanyUpdate(dict):
     return timestamp
 
   def _get_comments(self, update):
-    comments = [] 
+    update_comments = [] 
 
     if 'updateComments' in update:
-      comments = update['updateComments']
+      update_comments = update['updateComments']
+
+    comments.ingest(update_comments)
 
     return comments
 

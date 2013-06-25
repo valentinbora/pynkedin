@@ -1,8 +1,7 @@
 from pynkedin.auth import AuthService, AuthSession
 from pynkedin.parser import Parser
 
-from update_model import CompanyUpdate
-from updates import UpdatesManager
+from updates_manager import UpdatesManager
 
 KEYS    = ['id', 'universal_name']
 FILTERS = ['email_domains']
@@ -39,7 +38,6 @@ class Company(object):
     self.fields['id'] = company_id
 
   def __getattr__(self, item):
-    print self.fields
     if item in self.fields and self.cache:
       return self.fields[item]
 
@@ -68,7 +66,7 @@ class Company(object):
     response = AuthSession().get(path=path, parser=self.parser, **kwargs)
 
     while response:
-      updates.ingest_updates(response)
+      updates.ingest(response)
 
       kwargs['start'] += kwargs['count']
       response = AuthSession().get(path=path, parser=self.parser, **kwargs)
