@@ -5,5 +5,7 @@ rauth==0.5.4
 requests==1.1.0
 
 colorama
-
 flask
+
+nose
+mock
