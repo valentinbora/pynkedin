@@ -5,7 +5,9 @@ class Manager(list):
 
     for item in self:
       try:
-        if all(True for key, value in criteria.iteritems() if item[key] == value):
+        result = list((True for key, value in criteria.iteritems() if item[key] == value))
+
+        if all(result) and result:
           filtered_items.append(item)
       except KeyError:
         print error

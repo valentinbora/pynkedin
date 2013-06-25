@@ -14,5 +14,5 @@ company = Company(company_id=1703, cache=True)
 
 #print company.updates.add({})
 #pp(company.updates.filter(snid='s5750272081627451398')[0].comments.filter(id='143928804'))
-print company.updates.filter(snid='s5750272081627451398')[0].comments
+print len(company.updates.filter(snid='s5750272081627451398'))
 #print company.updates
