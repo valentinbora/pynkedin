@@ -10,7 +10,6 @@ class Manager(list):
         if all(result) and result:
           filtered_items.append(item)
       except KeyError:
-        print error
         continue
 
     return filtered_items
