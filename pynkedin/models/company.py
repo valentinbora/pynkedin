@@ -1,7 +1,7 @@
 from pynkedin.auth import AuthService, AuthSession
 from pynkedin.parser import Parser
 
-from updates_manager import UpdatesManager
+from pynkedin.managers.posts import PostsManager
 
 KEYS    = ['id', 'universal_name']
 FILTERS = ['email_domains']
@@ -18,13 +18,13 @@ class Company(object):
 
     Retrieve
     --------
-      company.updates => [{ update_1 }, { update_2 }]
+      company.posts => [{ post_1 }, { post_2 }]
       company.name    => 'Company name'
       company.fields  => { 'id': 1, ... , 'field_name': value }
 
     Create
     ------
-      company.updates.add(update)
+      company.posts.add(post)
 
   """
 
@@ -53,8 +53,8 @@ class Company(object):
 
     return response
 
-  def _get_updates(self):
-    updates = UpdatesManager(self)
+  def _get_posts(self):
+    posts = PostsManager(self)
 
     kwargs = {
       'start': 0,
@@ -66,12 +66,12 @@ class Company(object):
     response = AuthSession().get(path=path, parser=self.parser, **kwargs)
 
     while response:
-      updates.ingest(response)
+      posts.ingest(response)
 
       kwargs['start'] += kwargs['count']
       response = AuthSession().get(path=path, parser=self.parser, **kwargs)
 
     if self.cache:
-      self.fields['updates'] = updates
+      self.fields['posts'] = posts
 
-    return updates
+    return posts

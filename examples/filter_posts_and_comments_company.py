@@ -9,10 +9,9 @@ AuthSession(client_id='client_id_of_my_awesome_app',
 
 company = Company(company_id='company_id', cache=True)
 
-
 # you can do nested filtering
-# first filter the posts and then the comments
-comments = company.updates.filter(snid='s5750272081627451398')[0].comments.filter(id=143903254)
+# filter the posts first and then the comments
+comments = company.posts.filter(snid='s5750272081627451398')[0].comments.filter(id=143903254)
 
 # iterate through filtered comments
 for comment in comments:

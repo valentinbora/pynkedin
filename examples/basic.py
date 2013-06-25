@@ -1,4 +1,4 @@
-from pynkedin import Company
+from pynkedin.models.company import Company
 from pynkedin.auth import AuthSession
 
 from pprint import pprint as pp
@@ -11,4 +11,4 @@ AuthSession(client_id='hbm5ioyd4zvu',
 
 company = Company(company_id=1703, cache=True)
 
-#print company.updates.add({})
+print company.posts

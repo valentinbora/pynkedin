@@ -1,1 +1,2 @@
-from .company import Company
+from managers import *
+from models import *

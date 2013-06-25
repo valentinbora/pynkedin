@@ -9,10 +9,10 @@ AuthSession(client_id='client_id_of_my_awesome_app',
 
 company = Company(company_id='company_id', cache=True)
 
-# get the updates and the filter by some criteria
+# get the posts and the filter by some criteria
 # snid == social network id (the id from linkedin)
-filtered_updates = company.updates.filter(snid='an_update_snid') 
+filtered_posts = company.posts.filter(snid='a_post_snid') 
 
-# you can now iterate on filtered_updates
-for update in filtered_updates:
-  print update
+# you can now iterate on filtered_posts
+for post in filtered_posts:
+  print post

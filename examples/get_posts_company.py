@@ -9,12 +9,10 @@ AuthSession(client_id='client_id_of_my_awesome_app',
 
 company = Company(company_id='company_id', cache=True)
 
-#all udpates of a company get them only once
-print company.updates
+# all udpates of a company get them only once
+print company.posts
 
-#same as above
-print company.updates.all()
-
-#get all comments from an update
-for update in company.updates:
-  print update.comments
+# cached
+# get all comments from a post
+for post in company.posts:
+  print post.comments
