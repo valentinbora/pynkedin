@@ -9,10 +9,6 @@ AuthSession(client_id='hbm5ioyd4zvu',
             client_secret='1kDH3xYwW2D5Qwa3', 
             access_token=token)
 
-#company = Company(company_id=2418271)
 company = Company(company_id=1703, cache=True)
 
 #print company.updates.add({})
-#pp(company.updates.filter(snid='s5750272081627451398')[0].comments.filter(id='143928804'))
-print len(company.updates.filter(snid='s5750272081627451398'))
-#print company.updates
