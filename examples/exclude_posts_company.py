@@ -9,7 +9,7 @@ AuthSession(client_id='client_id_of_my_awesome_app',
 
 company = Company(company_id='company_id', cache=True)
 
-# get the posts and exclude the one that you don't want
+# get the posts and exclude the ones that you don't want
 filtered_posts = company.posts.exclude(comments=[])
 
 # you can now iterate on filtered_posts
