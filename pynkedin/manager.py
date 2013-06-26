@@ -13,3 +13,13 @@ class Manager(list):
         continue
 
     return Manager(filtered_items)
+
+  def exclude(self, **criteria):
+    """
+      Filter the items from self and return the diference between filtered items
+      and existing items 
+    """
+
+    filtered_items = self.filter(**criteria)
+
+    return Manager([item for item in self if item not in filtered_items])

@@ -11,4 +11,7 @@ AuthSession(client_id='hbm5ioyd4zvu',
 
 company = Company(company_id=1703, cache=True)
 
-print company.posts.filter(snid='s5750689491127906311').filter()
+posts = company.posts.exclude(comments=[])
+
+for post in posts:
+  print len(post.comments)
