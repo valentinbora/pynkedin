@@ -12,4 +12,4 @@ class Manager(list):
       except KeyError:
         continue
 
-    return filtered_items
+    return Manager(filtered_items)
