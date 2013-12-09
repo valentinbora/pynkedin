@@ -1,0 +1,11 @@
+argparse==1.2.1
+wsgiref==0.1.2
+
+rauth==0.5.4
+requests==1.1.0
+
+colorama
+flask
+
+nose
+mock
