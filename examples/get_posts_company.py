@@ -1,13 +1,15 @@
-from pynkedin import Company
+from pynkedin.models.company import Company
 from pynkedin.auth import AuthSession
+from config import *
+from pprint import pprint
 
 token = 'users_access_token'
 
-AuthSession(client_id='client_id_of_my_awesome_app',
-            client_secret='client_secret_of_my_awesome_app', 
-            access_token=token)
+AuthSession(client_id=config['client_id'],
+            client_secret=config['client_secret'], 
+            access_token=config['access_token'])
 
-company = Company(company_id='company_id', cache=True)
+company = Company(company_id=config['company_id'], cache=True)
 
 # all udpates of a company get them only once
 print company.posts
