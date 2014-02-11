@@ -1,7 +1,9 @@
 from pynkedin.auth import AuthService, AuthSession
-from pynkedin.parser import Parser
+from pynkedin.parser import Parser, ShareParser
 
 from pynkedin.managers.posts import PostsManager
+
+import json
 
 KEYS    = ['id', 'universal_name']
 FILTERS = ['email_domains']
@@ -30,6 +32,7 @@ class Company(object):
 
   fields = {}
   parser = Parser()
+  shareParser = ShareParser()
 
   def __init__(self, company_id, cache=True):
     self.path = "companies/%s" % company_id
@@ -75,3 +78,27 @@ class Company(object):
       self.fields['posts'] = posts
 
     return posts
+
+  def get_post_by_update_key(self, updateKey):
+    kwargs = {
+      'start': 0,
+      'count': 1
+    }
+    path = "%s/updates/key=%s" % (self.path, updateKey)
+
+    response = AuthSession().get(path=path, parser=lambda x: json.loads(x.content), **kwargs)
+
+    return response
+
+  def share(self):
+    fields = {
+      'visibility': {
+        'code': 'anyone'
+      },
+      'comment': "Lorem ipsum dolor sit amet, consectetur saluto. Bla salutiu."
+    }
+    path = "%s/shares" % self.path
+
+    response = AuthSession().post(path=path, parser=self.shareParser, fields=fields)
+
+    return response
