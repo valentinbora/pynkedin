@@ -15,7 +15,7 @@ class AuthSession(object):
   __metaclass__ = Singleton
 
   def __init__(self, client_id, client_secret, access_token=None):
-    self.session = OAuth2Session(client_id, client_secret, access_token)
+    self.session = OAuth2Session(client_id, client_secret, access_token, access_token_key='oauth2_access_token')
 
     self.call_url = None
     if access_token:
@@ -25,9 +25,17 @@ class AuthSession(object):
     if not access_token or not isinstance(access_token, str):
       raise ValueError('The access token is missing or is invalid')
 
-    self.call_url = BASE_URL + "%soauth2_access_token=" + access_token
+    self.access_token = access_token
+    
+  def get_call_url(self, method='GET'):
+    if method == 'GET':
+      return BASE_URL + "%soauth2_access_token=" + self.access_token
+    else:
+      return BASE_URL + '%s'
 
   def get(self, path, parser, fields=[], **kwargs):
+    self.call_url = self.get_call_url()
+
     if not self.call_url:
       raise LookupError("I can't start the request if the access token is missing")
 
@@ -40,15 +48,25 @@ class AuthSession(object):
     if kwargs:
       filters_path = self._build_filters_path(**kwargs)
       relative_path = "%s?%s&" % (path, filters_path)
-
+    else:
+      relative_path = path + "?"
+      
     url = self.call_url % relative_path
 
     response = self.session.get(url, headers={'x-li-format':'json'}, bearer_auth=False)
 
     return parser(response)
 
-  def post(self, **kwargs):
-    pass
+  def post(self, path, parser, fields, **kwargs):
+    self.call_url = self.get_call_url('POST')
+
+    if not self.call_url:
+      raise LookupError("I can't start the request if the access token is missing")
+
+    url = self.call_url % path
+    response = self.session.request('POST', url, data=json.dumps(fields), headers={'x-li-format':'json', 'Content-Type': 'application/json'}, bearer_auth=False)
+    
+    return parser(response)
 
   def filter(self, path, parser=None, **kwargs):
     relative_path = "%s::(%s)"
