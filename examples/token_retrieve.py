@@ -1,14 +1,13 @@
 from colorama import Fore
-
+from config import *
 from pynkedin.auth import AuthService
 
-client_id = 'hbm5ioyd4zvu'
-client_secret = '1kDH3xYwW2D5Qwa3'
+client_id = config['client_id']
+client_secret = config['client_secret']
 
 print Fore.YELLOW + '---- START TOKEN RETRIEVING OPERATION ----' + Fore.RESET
-scope = 'r_fullprofile'
+scope = 'r_fullprofile rw_company_admin'
 redirect_uri = 'http://localhost'
-
 
 service = AuthService(client_id, client_secret, redirect_uri)
 
