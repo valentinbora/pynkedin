@@ -1,4 +1,4 @@
-from pynkedin.managers.comments import CommentsManager
+from ..managers.comments import CommentsManager
 
 comments = CommentsManager()
 

@@ -1,8 +1,8 @@
 from abc import ABCMeta, abstractmethod
 import json
 
-from exceptions import raiser, EXCEPTION_CODES
-from helpers import ResponseObject
+from ..exceptions import raiser, EXCEPTION_CODES
+from ..helpers import ResponseObject
 
 class Parser(object):
   def __call__(self, response):
@@ -27,13 +27,3 @@ class Parser(object):
       return response_objects[0]
 
     return response_objects
-
-class ShareParser(object):
-  def __call__(self, response):
-    content = json.loads(response.content)
-
-    if response.status_code in EXCEPTION_CODES:
-      print response.text
-      raiser(response.status_code)
-
-    return content

@@ -17,4 +17,4 @@ print company.posts
 # cached
 # get all comments from a post
 for post in company.posts:
-  print post.comments
+  pprint(post.get_content())
