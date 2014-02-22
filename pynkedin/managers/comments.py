@@ -1,4 +1,4 @@
-from pynkedin.manager import Manager
+from ..manager import Manager
 
 class CommentsManager(Manager):
 

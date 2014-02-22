@@ -1,5 +1,5 @@
-from pynkedin.manager import Manager
-from pynkedin.models.post import CompanyPost
+from ..manager import Manager
+from ..models.post import CompanyPost
 
 class PostsManager(Manager):
 

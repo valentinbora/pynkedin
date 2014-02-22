@@ -9,7 +9,6 @@ AuthSession(client_id=config['client_id'],
 
 company = Company(company_id=config['company_id'])
 
-# action = company.share_image(image_url="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn2/t1/1656338_360744710735206_453087077_n.jpg", comment="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, quaerat, voluptatum, dolores corporis sit fugiat nobis iste veritatis sapiente nisi repellendus voluptatibus voluptatem quasi optio accusantium aspernatur laborum laboriosam numquam!")
 action = company.share_link(url="http://airbnb.github.io/polyglot.js/", comment="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, quaerat, voluptatum, dolores corporis sit fugiat nobis iste veritatis sapiente nisi repellendus voluptatibus voluptatem quasi optio accusantium aspernatur laborum laboriosam numquam!", image_url="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn2/t1/1656338_360744710735206_453087077_n.jpg")
 
 print action

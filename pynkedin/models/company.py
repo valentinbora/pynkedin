@@ -1,9 +1,13 @@
-from pynkedin.auth import AuthService, AuthSession
-from pynkedin.parser import Parser, ShareParser
+from ..auth import AuthService, AuthSession
+from ..parsers.default import Parser
+from ..parsers.share import ShareParser
+from ..parsers.company_collection import CompanyCollectionParser
 
-from pynkedin.managers.posts import PostsManager
+from ..managers.posts import PostsManager
 
 import json
+import os
+from urlparse import urlparse
 
 KEYS    = ['id', 'universal_name']
 FILTERS = ['email_domains']
@@ -120,6 +124,7 @@ class Company(object):
 
     image_url_components = urlparse(image_url)
     image_url_path = image_url_components.path
+    fields['content']['title'] = os.path.split(image_url_path)[1]
     fields['content']['title'] = ""
 
     if comment:
